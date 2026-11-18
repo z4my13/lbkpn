@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>บันทึกการปฏิบัติงานแก้ไฟขัดข้อง — กฟฟ.กำแพงแสน</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f6f7f9;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f3f5;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --border-focus: #94a3b8;
+      --accent: #334155;
+      --accent-hover: #1e293b;
+      --primary-soft: #eef2ff;
+      --primary-text: #3730a3;
+      --danger: #dc2626;
+      --radius-lg: 14px;
+      --radius-md: 9px;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.55;
+      padding: 24px 16px 64px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .header-title span {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+
+    .header-title h1 {
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .header-title p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .badge-no {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      color: var(--text-muted);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .badge-no strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* Form Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--bg-subtle);
+    }
+
+    .card-header h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .card-header small {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Grid System */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .col-12 { grid-column: span 12; }
+    .col-8  { grid-column: span 8; }
+    .col-6  { grid-column: span 6; }
+    .col-4  { grid-column: span 4; }
+    .col-3  { grid-column: span 3; }
+
+    @media (max-width: 680px) {
+      .col-8, .col-6, .col-4, .col-3 {
+        grid-column: span 12;
+      }
+      .card {
+        padding: 18px;
+      }
+    }
+
+    /* Inputs & Labels */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    label .hint {
+      font-size: 11.5px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-main);
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 9px 12px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15);
+    }
+
+    input[readonly] {
+      background-color: var(--bg-subtle);
+      color: var(--text-muted);
+      cursor: default;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 76px;
+    }
+
+    /* Segmented Radio Pills */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill-item {
+      position: relative;
+      flex: 1;
+      min-width: 68px;
+    }
+
+    .pill-item input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pill-item span {
+      display: block;
+      text-align: center;
+      padding: 8px 10px;
+      font-size: 13.5px;
+      font-weight: 500;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: #fff;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pill-item input:checked + span {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Time Box Group */
+    .time-box {
+      background: var(--bg-page);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .time-box-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--primary-text);
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    /* File Upload */
+    .file-drop {
+      border: 1.5px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      background: var(--bg-page);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .file-drop:hover {
+      border-color: var(--border-focus);
+    }
+
+    .file-drop p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    #previewImg {
+      max-height: 140px;
+      margin-top: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    /* Buttons */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-subtle);
+    }
+
+    /* Saved Table Section */
+    .log-section {
+      margin-top: 32px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--bg-subtle);
+      white-space: nowrap;
+    }
+
+    th {
+      background: var(--bg-page);
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 28px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+    }
+
+    .btn-del {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 12.5px;
+      font-family: inherit;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--text-main);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-title">
+      <span>กฟฟ.กำแพงแสน</span>
+      <h1>บันทึกการปฏิบัติงานแก้กระแสไฟฟ้าขัดข้อง</h1>
+      <p>แบบฟอร์มบันทึกข้อมูลเวรปฏิบัติงานประจำวัน (Logbook)</p>
+    </div>
+    <div class="badge-no">
+      ลำดับที่: <strong id="displayNo">1</strong>
+    </div>
+  </header>
+
+  <form id="logbookForm">
+    <!-- 1. การรับแจ้ง & เวลาปฏิบัติงาน -->
+    <div class="card">
+      <div class="card-header">
+        <h2>1. ข้อมูลการรับแจ้งและช่วงเวลา</h2>
+        <small>คำนวณเวลารวมอัตโนมัติ</small>
+      </div>
+      <div class="grid">
+        <div class="field col-3">
+          <label for="date">วัน-เดือน-ปี</label>
+          <input type="date" id="date" required />
+        </div>
+        <div class="field col-3">
+          <label for="notifyChannel">การแจ้ง</label>
+          <input type="text" id="notifyChannel" list="channelList" placeholder="เช่น โทร, ศูนย์" value="โทร" />
+          <datalist id="channelList">
+            <option value="โทร">
+            <option value="ศูนย์">
+          </datalist>
+        </div>
+        <div class="field col-3">
+          <label for="notifyTime">เวลารับแจ้ง</label>
+          <input type="time" id="notifyTime" required />
+        </div>
+        <div class="field col-3">
+          <label for="receiver">ผู้รับแจ้ง</label>
+          <input type="text" id="receiver" list="leaderList" placeholder="ระบุชื่อผู้รับแจ้ง" required />
+        </div>
+
+        <!-- กล่องเวลาไฟดับ -->
+        <div class="col-6">
+          <div class="time-box">
+            <div class="time-box-title">
+              <span>เวลาไฟดับ</span>
+              <button type="button" class="link-btn" onclick="syncTime('outageStart')">ใช้เวลารับแจ้ง</button>
+            </div>
+            <div class="grid">
+              <div class="field col-4">
+                <label for="outageStart">เริ่ม</label>
+                <input type="time" id="outageStart" />
+              </div>
+              <div class="field col-4">
+                <label for="outageEnd">ถึง</label>
+                <input type="time" id="outageEnd" />
+              </div>
+              <div class="field col-4">
+                <label for="outageTotal">รวม</label>
+                <input type="text" id="outageTotal" readonly placeholder="0 ชม. 00 น." />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- กล่องเวลาออกปฏิบัติงาน -->
+        <div class="col-6">
+          <div class="time-box">
+            <div class="time-box-title">
+              <span>เวลาออกปฏิบัติงาน</span>
+              <button type="button" class="link-btn" onclick="syncTime('workOut')">ใช้เวลารับแจ้ง</button>
+            </div>
+            <div class="grid">
+              <div class="field col-4">
+                <label for="workOut">ออก</label>
+                <input type="time" id="workOut" />
+              </div>
+              <div class="field col-4">
+                <label for="workIn">เข้า</label>
+                <input type="time" id="workIn" />
+              </div>
+              <div class="field col-4">
+                <label for="workTotal">รวม</label>
+                <input type="text" id="workTotal" readonly placeholder="0 ชม. 00 น." />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. รายละเอียดเหตุการณ์ -->
+    <div class="card">
+      <div class="card-header">
+        <h2>2. รายละเอียดเหตุการณ์ไฟฟ้าขัดข้อง</h2>
+      </div>
+      <div class="grid">
+        <div class="field col-4">
+          <label>ระดับแรงดัน</label>
+          <div class="pill-group">
+            <label class="pill-item">
+              <input type="radio" name="voltage" value="HV" checked>
+              <span>HV (แรงสูง)</span>
+            </label>
+            <label class="pill-item">
+              <input type="radio" name="voltage" value="LV">
+              <span>LV (แรงต่ำ)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field col-8">
+          <label>เหตุการณ์ไฟฟ้าขัดข้อง</label>
+          <div class="pill-group">
+            <label class="pill-item"><input type="radio" name="eventType" value="D/F" checked><span>D/F</span></label>
+            <label class="pill-item"><input type="radio" name="eventType" value="LT"><span>LT</span></label>
+            <label class="pill-item"><input type="radio" name="eventType" value="MT"><span>MT</span></label>
+            <label class="pill-item"><input type="radio" name="eventType" value="T/R"><span>T/R</span></label>
+            <label class="pill-item"><input type="radio" name="eventType" value="T/L"><span>T/L</span></label>
+            <label class="pill-item"><input type="radio" name="eventType" value="บร.1"><span>บร.1</span></label>
+          </div>
+        </div>
+
+        <div class="field col-6">
+          <label for="deviceCode">รหัสอุปกรณ์ <span class="hint">ตย. KSA01VB-01, 59-012921/30</span></label>
+          <input type="text" id="deviceCode" placeholder="กรอกรหัสอุปกรณ์ / หม้อแปลง / มิเตอร์" />
+        </div>
+
+        <div class="field col-6">
+          <label for="location">สถานที่ไฟดับ</label>
+          <input type="text" id="location" placeholder="เช่น ม.7 ต.ทุ่งบัว หรือ จุดสังเกต" required />
+        </div>
+
+        <div class="field col-12">
+          <label for="cause">สาเหตุ</label>
+          <textarea id="cause" rows="2" placeholder="ระบุสาเหตุที่พบ เช่น ฟิวส์แรงสูงขาดเฟส C ช็อตงู, หลวมจุดต่อ..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. การแก้ไขและอุปกรณ์ที่ใช้ -->
+    <div class="card">
+      <div class="card-header">
+        <h2>3. การแก้ไขและอุปกรณ์ที่ใช้</h2>
+      </div>
+      <div class="grid">
+        <div class="field col-6">
+          <label for="resolution">การแก้ไข</label>
+          <textarea id="resolution" list="resList" placeholder="เช่น เปลี่ยนฟิวส์ใหม่จ่ายไฟได้ปกติ, จั๊มสายใหม่..."></textarea>
+        </div>
+        <div class="field col-6">
+          <label for="materials">อุปกรณ์ที่ใช้</label>
+          <textarea id="materials" placeholder="เช่น ฟิวส์แรงสูง 6A = 1 เส้น, BT = 2 อัน..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. ผู้ปฏิบัติงานและยานพาหนะ -->
+    <div class="card">
+      <div class="card-header">
+        <h2>4. ทีมปฏิบัติงานและสภาพแวดล้อม</h2>
+      </div>
+      <div class="grid">
+        <div class="field col-4">
+          <label for="staffPch">พชง.</label>
+          <input type="text" id="staffPch" list="pchList" placeholder="เลือกหรือพิมพ์ชื่อ" />
+        </div>
+        <div class="field col-4">
+          <label for="staffCh1">ชชง. 1</label>
+          <input type="text" id="staffCh1" list="chList" placeholder="เลือกหรือพิมพ์ชื่อ" />
+        </div>
+        <div class="field col-4">
+          <label for="staffCh2">ชชง. 2</label>
+          <input type="text" id="staffCh2" list="chList" placeholder="เลือกหรือพิมพ์ชื่อ (ถ้ามี)" />
+        </div>
+
+        <div class="field col-4">
+          <label for="shiftLeader">
+            หัวหน้าเวร
+            <button type="button" class="link-btn" onclick="copyReceiver()">เหมือนผู้รับแจ้ง</button>
+          </label>
+          <input type="text" id="shiftLeader" list="leaderList" placeholder="เลือกหรือพิมพ์ชื่อ" />
+        </div>
+        <div class="field col-4">
+          <label for="carNo">หมายเลขรถ</label>
+          <select id="carNo">
+            <option value="">-- เลือกรถ --</option>
+            <option value="กพส.01">กพส.01</option>
+            <option value="กพส.02">กพส.02</option>
+            <option value="กพส.03">กพส.03</option>
+            <option value="กพส.05">กพส.05</option>
+          </select>
+        </div>
+        <div class="field col-4">
+          <label for="weather">สภาพอากาศ</label>
+          <select id="weather">
+            <option value="ปกติ">ปกติ</option>
+            <option value="ลมแรง">ลมแรง</option>
+            <option value="ฝนตก">ฝนตก</option>
+            <option value="ชื้น, หมอก">ชื้น, หมอก</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. เลขที่ใบสั่งและรูปภาพ -->
+    <div class="card">
+      <div class="card-header">
+        <h2>5. เลขที่ใบสั่งและหมายเหตุ / รูปภาพ</h2>
+      </div>
+      <div class="grid">
+        <div class="field col-6">
+          <label for="omsNo">เลขที่ใบสั่ง OMS <span class="hint">หรือ เล่มที่/เลขที่ บร.1</span></label>
+          <input type="text" id="omsNo" placeholder="เช่น 6573276667 หรือ เล่มที่... เลขที่..." />
+        </div>
+        <div class="field col-6">
+          <label for="sapNo">เลขที่ใบสั่ง SAP</label>
+          <input type="text" id="sapNo" placeholder="เช่น 1008548307" />
+        </div>
+        <div class="field col-6">
+          <label for="note">หมายเหตุเพิ่มเติม</label>
+          <input type="text" id="note" placeholder="หมายเหตุหน้างาน (ถ้ามี)" />
+        </div>
+        <div class="field col-6">
+          <label>แนบรูปภาพหน้างาน</label>
+          <label class="file-drop" for="photoInput">
+            <p id="fileLabel">คลิกเพื่อเลือกรูปภาพประกอบ</p>
+            <img id="previewImg" alt="ตัวอย่างรูปภาพ" />
+            <input type="file" id="photoInput" accept="image/*" hidden />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="reset" class="btn btn-secondary" onclick="resetFormExtras()">ล้างข้อมูล</button>
+      <button type="submit" class="btn btn-primary">บันทึกรายการ</button>
+    </div>
+  </form>
+
+  <!-- ตารางแสดงรายการที่บันทึกไว้ -->
+  <div class="log-section">
+    <div class="card-header" style="border:none; margin-bottom: 10px;">
+      <h2>รายการที่บันทึกไว้ (<span id="recordCount">0</span>)</h2>
+      <button type="button" class="btn btn-secondary" style="padding: 6px 14px; font-size: 13px;" onclick="exportCSV()">
+        ส่งออกไฟล์ CSV (Excel)
+      </button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>วันที่</th>
+            <th>เวลาดับ</th>
+            <th>รวมดับ</th>
+            <th>แรงดัน</th>
+            <th>ประเภท</th>
+            <th>รหัสอุปกรณ์</th>
+            <th>สถานที่</th>
+            <th>สาเหตุ / การแก้ไข</th>
+            <th>หัวหน้าเวร</th>
+            <th>รถ</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+        <tbody id="logTableBody">
+          <tr><td colspan="12" class="empty-state">ยังไม่มีข้อมูลที่บันทึก</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Datalists จากข้อมูลจริงในไฟล์ -->
+<datalist id="leaderList">
+  <option value="วิรัช สาราช">
+  <option value="ภาสกร ศรีสุวรรณกุล">
+  <option value="ศุภชัย วิลัยเลิศ">
+  <option value="พิพัฒน์ พงษ์พากเพียร">
+</datalist>
+
+<datalist id="pchList">
+  <option value="ปิยะ พุ่มดี">
+  <option value="เทียนชัย ลงสุวรรณ">
+  <option value="ศักดิ์ชาย รุดทัง">
+  <option value="อินทัช จงเจริญ">
+  <option value="ศุภณัฐ ดำรงสุกิจ">
+  <option value="สมพร เทพพิทักษ์">
+  <option value="ชนายุ บุญศรี">
+  <option value="ศรัณย์ วรรณคนึง">
+  <option value="ศักดิ์ชาย ฮวดมา">
+  <option value="หฤษฎ์ พวงนวม">
+</datalist>
+
+<datalist id="chList">
+  <option value="วีระพงษ์ เพ็งสมยา">
+  <option value="ดาม แสงคำมี">
+  <option value="มงคล สระทองอยู่">
+  <option value="คมสัน สิงห์กลิ่น">
+  <option value="ธีรพงษ์ สำเภาทอง">
+  <option value="ปิยศักดิ์ ฝอยทอง">
+  <option value="พิชัย โพธิ์พันธุ์">
+  <option value="ศักดิ์ชาย ฮวดมา">
+  <option value="สมชาย บัวศรี">
+  <option value="ชัยสิทธิ์ อุนะเสน">
+  <option value="เพ้ง ใบมาก">
+  <option value="ธัชฌา เกศูนย์">
+  <option value="ธเนศพล กัลยา">
+  <option value="จิกรานต์ แดงเขียว">
+  <option value="สมพร เทพพิทักษ์">
+  <option value="อัครา รักษ์สุภักดี">
+</datalist>
+
+<div id="toast" class="toast">บันทึกข้อมูลเรียบร้อย</div>
+
+<script>
+  const STORAGE_KEY = 'pea_kps_logbook_v1';
+  let logs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+  // ตั้งค่าวันที่ปัจจุบันเป็นค่าเริ่มต้น
+  document.getElementById('date').valueAsDate = new Date();
+
+  // คำนวณระยะเวลา (รองรับข้ามเที่ยงคืน)
+  function calcDuration(startStr, endStr) {
+    if (!startStr || !endStr) return '';
+    const [sh, sm] = startStr.split(':').map(Number);
+    const [eh, em] = endStr.split(':').map(Number);
+    let diff = (eh * 60 + em) - (sh * 60 + sm);
+    if (diff < 0) diff += 24 * 60;
+    const h = Math.floor(diff / 60);
+    const m = diff % 60;
+    return `${h}:${String(m).padStart(2, '0')}`;
+  }
+
+  function updateTimeTotals() {
+    document.getElementById('outageTotal').value = calcDuration(
+      document.getElementById('outageStart').value,
+      document.getElementById('outageEnd').value
+    );
+    document.getElementById('workTotal').value = calcDuration(
+      document.getElementById('workOut').value,
+      document.getElementById('workIn').value
+    );
+  }
+
+  ['outageStart', 'outageEnd', 'workOut', 'workIn'].forEach(id => {
+    document.getElementById(id).addEventListener('change', updateTimeTotals);
+  });
+
+  // คัดลอกเวลารับแจ้ง
+  function syncTime(targetId) {
+    const notifyTime = document.getElementById('notifyTime').value;
+    if (notifyTime) {
+      document.getElementById(targetId).value = notifyTime;
+      updateTimeTotals();
+    }
+  }
+
+  // คัดลอกชื่อผู้รับแจ้งไปหัวหน้าเวร
+  function copyReceiver() {
+    document.getElementById('shiftLeader').value = document.getElementById('receiver').value;
+  }
+
+  // พรีวิวรูปภาพ
+  document.getElementById('photoInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('previewImg');
+    const label = document.getElementById('fileLabel');
+    if (file) {
+      label.textContent = file.name;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        preview.src = ev.target.result;
+        preview.style.display = 'inline-block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  function resetFormExtras() {
+    setTimeout(() => {
+      document.getElementById('date').valueAsDate = new Date();
+      document.getElementById('previewImg').style.display = 'none';
+      document.getElementById('fileLabel').textContent = 'คลิกเพื่อเลือกรูปภาพประกอบ';
+      updateTimeTotals();
+    }, 10);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // บันทึกฟอร์ม
+  document.getElementById('logbookForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const entry = {
+      id: Date.now(),
+      date: document.getElementById('date').value,
+      outageStart: document.getElementById('outageStart').value,
+      outageEnd: document.getElementById('outageEnd').value,
+      outageTotal: document.getElementById('outageTotal').value,
+      voltage: document.querySelector('input[name="voltage"]:checked').value,
+      eventType: document.querySelector('input[name="eventType"]:checked').value,
+      deviceCode: document.getElementById('deviceCode').value.trim(),
+      location: document.getElementById('location').value.trim(),
+      cause: document.getElementById('cause').value.trim(),
+      resolution: document.getElementById('resolution').value.trim(),
+      materials: document.getElementById('materials').value.trim(),
+      notifyChannel: document.getElementById('notifyChannel').value.trim(),
+      notifyTime: document.getElementById('notifyTime').value,
+      receiver: document.getElementById('receiver').value.trim(),
+      workOut: document.getElementById('workOut').value,
+      workIn: document.getElementById('workIn').value,
+      workTotal: document.getElementById('workTotal').value,
+      staffPch: document.getElementById('staffPch').value.trim(),
+      staffCh1: document.getElementById('staffCh1').value.trim(),
+      staffCh2: document.getElementById('staffCh2').value.trim(),
+      shiftLeader: document.getElementById('shiftLeader').value.trim(),
+      omsNo: document.getElementById('omsNo').value.trim(),
+      sapNo: document.getElementById('sapNo').value.trim(),
+      weather: document.getElementById('weather').value,
+      carNo: document.getElementById('carNo').value,
+      note: document.getElementById('note').value.trim()
+    };
+
+    logs.push(entry);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+    renderTable();
+    showToast('บันทึกข้อมูลเรียบร้อยแล้ว');
+
+    // เคลียร์เฉพาะช่องรายละเอียดงาน คงค่าเวร/ทีมงาน/รถไว้กรอกเคสถัดไปได้เร็วขึ้น
+    ['notifyTime', 'outageStart', 'outageEnd', 'outageTotal', 'workOut', 'workIn', 'workTotal',
+     'deviceCode', 'location', 'cause', 'resolution', 'materials', 'omsNo', 'sapNo', 'note'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('previewImg').style.display = 'none';
+    document.getElementById('fileLabel').textContent = 'คลิกเพื่อเลือกรูปภาพประกอบ';
+  });
+
+  function deleteLog(id) {
+    if (!confirm('ต้องการลบรายการนี้ใช่หรือไม่?')) return;
+    logs = logs.filter(item => item.id !== id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+    renderTable();
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById('logTableBody');
+    document.getElementById('displayNo').textContent = logs.length + 1;
+    document.getElementById('recordCount').textContent = logs.length;
+
+    if (logs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="12" class="empty-state">ยังไม่มีข้อมูลที่บันทึก</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = logs.map((row, idx) => `
+      <tr>
+        <td>${idx + 1}</td>
+        <td>${row.date}</td>
+        <td>${row.outageStart || '-'} - ${row.outageEnd || '-'}</td>
+        <td>${row.outageTotal || '-'}</td>
+        <td>${row.voltage}</td>
+        <td>${row.eventType}</td>
+        <td>${row.deviceCode || '-'}</td>
+        <td>${row.location}</td>
+        <td>${row.cause || '-'} / ${row.resolution || '-'}</td>
+        <td>${row.shiftLeader || '-'}</td>
+        <td>${row.carNo || '-'}</td>
+        <td><button class="btn-del" onclick="deleteLog(${row.id})">ลบ</button></td>
+      </tr>
+    `).join('');
+  }
+
+  // ส่งออก CSV เรียงคอลัมน์ตรงตาม Excel เดิมเป๊ะ
+  function exportCSV() {
+    if (logs.length === 0) {
+      alert('ยังไม่มีข้อมูลสำหรับส่งออก');
+      return;
+    }
+    const headers = [
+      'ลำดับที่', 'วัน-เดือน-ปี', 'ไฟดับเริ่ม', 'ไฟดับถึง', 'ไฟดับรวม',
+      'ระดับแรงดัน', 'เหตุการณ์ไฟฟ้าขัดข้อง', 'รหัสอุปกรณ์', 'สถานที่ไฟดับ', 'สาเหตุ',
+      'การแก้ไข', 'อุปกรณ์ที่ใช้', 'การแจ้ง', 'เวลารับแจ้ง', 'ผู้รับแจ้ง',
+      'ปฏิบัติงานออก', 'ปฏิบัติงานเข้า', 'ปฏิบัติงานรวม', 'พชง.', 'ชชง.1',
+      'ชชง.2', 'หัวหน้าเวร', 'เลขที่ใบสั่ง OMS', 'เลขที่ใบสั่ง SAP', 'สภาพอากาศ',
+      'หมายเลขรถ', 'หมายเหตุ'
+    ];
+
+    const escapeCSV = val => `"${String(val || '').replace(/"/g, '""')}"`;
+
+    const rows = logs.map((r, i) => [
+      i + 1, r.date, r.outageStart, r.outageEnd, r.outageTotal,
+      r.voltage, r.eventType, r.deviceCode, r.location, r.cause,
+      r.resolution, r.materials, r.notifyChannel, r.notifyTime, r.receiver,
+      r.workOut, r.workIn, r.workTotal, r.staffPch, r.staffCh1,
+      r.staffCh2, r.shiftLeader, r.omsNo, r.sapNo, r.weather,
+      r.carNo, r.note
+    ].map(escapeCSV).join(','));
+
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `logbook_kps_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  renderTable();
+</script>
+
+</body>
+</html>
